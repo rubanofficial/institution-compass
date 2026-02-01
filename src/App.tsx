@@ -3,8 +3,21 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
+
+// Public Pages
+import LandingPage from "./pages/LandingPage";
+import AnonymousComplaintPage from "./pages/AnonymousComplaintPage";
+import IdentifiedComplaintPage from "./pages/IdentifiedComplaintPage";
+import SubmissionConfirmationPage from "./pages/SubmissionConfirmationPage";
+import TrackComplaintPage from "./pages/TrackComplaintPage";
 import NotFound from "./pages/NotFound";
+
+// Admin Pages
+import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+import ComplaintsListPage from "./pages/admin/ComplaintsListPage";
+import ComplaintDetailPage from "./pages/admin/ComplaintDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -15,8 +28,22 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          {/* Public Routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/submit/anonymous" element={<AnonymousComplaintPage />} />
+          <Route path="/submit/identified" element={<IdentifiedComplaintPage />} />
+          <Route path="/submitted/:complaintId" element={<SubmissionConfirmationPage />} />
+          <Route path="/track" element={<TrackComplaintPage />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="dashboard" element={<AdminDashboardPage />} />
+            <Route path="complaints" element={<ComplaintsListPage />} />
+            <Route path="complaints/:complaintId" element={<ComplaintDetailPage />} />
+          </Route>
+          
+          {/* Catch-all */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
